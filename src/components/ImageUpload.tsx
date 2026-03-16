@@ -1,0 +1,201 @@
+import React, { useRef } from 'react';
+import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { useImageUpload } from '../hooks/useImageUpload';
+import { optimizeImage } from '../utils/image-optimization';
+
+interface ImageUploadProps {
+  currentImage?: string;
+  onImageChange: (imageUrl: string | undefined) => void;
+  className?: string;
+  label?: string;
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  currentImage,
+  onImageChange,
+  className = '',
+  label = 'Menu Item Image'
+}) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { deleteImage } = useImageUpload();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
+
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsLoading(true);
+    setImageLoaded(false);
+    setImageError(false);
+
+    try {
+      // Optimize image (resize to 1000x1000, 0.8 quality)
+      const optimizedBlob = await optimizeImage(file);
+
+      // Preview compressed version
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onImageChange(reader.result as string);
+        setIsLoading(false);
+      };
+      reader.readAsDataURL(optimizedBlob);
+    } catch (error) {
+      console.error('Optimization error:', error);
+      alert('Failed to process image. Using original file...');
+      // Fallback to original
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onImageChange(reader.result as string);
+        setIsLoading(false);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveImage = async () => {
+    if (currentImage) {
+      try {
+        await deleteImage(currentImage);
+        onImageChange(undefined);
+        setImageLoaded(false);
+        setImageError(false);
+      } catch (error) {
+        console.error('Error removing image:', error);
+        // Still remove from UI even if deletion fails
+        onImageChange(undefined);
+      }
+    }
+  };
+
+  const triggerFileSelect = () => {
+    fileInputRef.current?.click();
+  };
+
+  return (
+    <div className={`space-y-4 ${className}`}>
+      <label htmlFor="image-upload-input" className="block text-sm font-medium text-black mb-2">{label}</label>
+
+      {currentImage ? (
+        <div className="relative">
+          {!imageError ? (
+            <img
+              src={currentImage}
+              alt="Menu item preview"
+              className={`w-full aspect-square object-cover rounded-sm border border-gray-300 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              decoding="async"
+              onError={() => setImageError(true)}
+              onLoad={() => setImageLoaded(true)}
+            />
+          ) : (
+            <div className="w-full aspect-square flex items-center justify-center bg-gray-100 rounded-sm border border-gray-300">
+              <span className="text-xs text-gray-500">Image failed to load</span>
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={handleRemoveImage}
+            className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors duration-200"
+            disabled={isLoading}
+            title="Remove image"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      ) : (
+        <div
+          onClick={triggerFileSelect}
+          className="w-full aspect-square border-2 border-dashed border-brand-silver rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-brand-lavender hover:bg-brand-gray/50 transition-all duration-500 group"
+        >
+          {isLoading ? (
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-lavender mx-auto mb-4"></div>
+              <p className="text-sm text-gray-600">Loading image...</p>
+            </div>
+          ) : (
+            <>
+              <ImageIcon className="h-12 w-12 text-gray-400 mb-2" />
+              <p className="text-sm text-gray-600 mb-1 font-medium">📁 Click to upload image</p>
+              <p className="text-xs text-gray-500">All formats & quality accepted</p>
+            </>
+          )}
+        </div>
+      )}
+
+      <input
+        id="image-upload-input"
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        className="hidden"
+        disabled={isLoading}
+        title="Upload image file"
+      />
+
+      {!currentImage && (
+        <div className="flex items-center space-x-2">
+          <button
+            type="button"
+            onClick={triggerFileSelect}
+            disabled={isLoading}
+            className="flex items-center space-x-3 px-6 py-2.5 bg-brand-black text-white rounded-sm hover:shadow-2xl transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed font-black text-[10px] uppercase tracking-widest font-montserrat"
+            title="Upload from computer"
+          >
+            <Upload className="h-4 w-4" />
+            <span>📁 Upload Image</span>
+          </button>
+          <span className="text-sm text-gray-500">or enter URL below</span>
+        </div>
+      )}
+
+      {/* OR Divider */}
+      <div className="flex items-center gap-2">
+        <div className="flex-1 border-t border-gray-300"></div>
+        <span className="text-xs text-gray-500 font-medium">OR</span>
+        <div className="flex-1 border-t border-gray-300"></div>
+      </div>
+
+      {/* URL Input as fallback */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Enter Image URL</label>
+        <input
+          id="image-url-input"
+          type="text"
+          value={currentImage || ''}
+          onChange={(e) => onImageChange(e.target.value || undefined)}
+          className="w-full px-4 py-3 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-brand-gray/20 text-xs font-bold"
+          placeholder="/brand-logo.jpg or https://..."
+          disabled={isLoading}
+          title="Enter image URL"
+        />
+
+        {/* Quick Path Helper */}
+        <button
+          type="button"
+          onClick={() => onImageChange('/brand-logo.jpg')}
+          className="text-[9px] px-4 py-2 bg-brand-gray text-brand-black rounded-sm hover:bg-white border border-brand-silver/50 transition-all duration-500 font-black uppercase tracking-widest font-montserrat"
+          title="Set to default logo"
+        >
+          💎 Use Brand Logo
+        </button>
+
+        <p className="text-xs text-gray-500">
+          💡 <strong>Supports:</strong> All image formats • Any quality/size • Upload file or enter URL
+        </p>
+        <p className="text-xs text-gray-400">
+          ✨ Low quality images are welcome! Upload any image you have.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default ImageUpload;

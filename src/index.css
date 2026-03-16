@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-brand-black antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-tighter text-brand-black;
+  }
+}
+
+/* Starbucks-Inspired Palette */
+:root {
+  --brand-violet: #7F00FF;
+  --brand-deep: #4B0082;
+  --brand-black: #121212;
+  --brand-white: #FFFFFF;
+}
+
+/* Custom Utilities */
+.btn-brand {
+  @apply bg-brand-violet text-white px-8 py-4 rounded-full font-sans font-black uppercase tracking-[0.2em] transition-all hover:bg-brand-deep active:scale-95 shadow-xl shadow-brand-violet/20;
+}
+
+.btn-brand-outline {
+  @apply border-2 border-brand-violet text-brand-violet px-8 py-4 rounded-full font-sans font-black uppercase tracking-[0.2em] transition-all hover:bg-brand-violet hover:text-white;
+}
+
+
+/* Hide scrollbar for mobile nav */
+@supports (scrollbar-width: none) {
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Image loading optimization */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  /* Edge 79+ */
+  image-rendering: pixelated;
+}
+
+/* Preload critical images */
+.preload-image {
+  content: '';
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+}
