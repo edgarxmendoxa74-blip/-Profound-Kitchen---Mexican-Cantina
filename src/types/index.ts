@@ -88,6 +88,11 @@ export interface Coupon {
 export type PaymentMethod = 'gcash' | 'cod';
 export type ServiceType = 'regular' | 'cod';
 
+export interface EventPolicy {
+  title: string;
+  desc: string;
+}
+
 // Site Settings Types
 export interface SiteSetting {
   id: string;
@@ -113,4 +118,25 @@ export interface SiteSettings {
   hero_subtitle?: string;
   hero_images?: string[];
   shipping_rates?: ShippingRates;
+  events_title?: string;
+  events_subtitle?: string;
+  events_description?: string;
+  events_policies?: EventPolicy[];
+  events_feature1_title?: string;
+  events_feature1_desc?: string;
+  events_feature2_title?: string;
+  events_feature2_desc?: string;
+  events_button_text?: string;
+  events_button_url?: string;
+  events_quote?: string;
+  events_form_title?: string;
+  events_form_link_text?: string;
+  location_subtitle?: string;
+  location_title?: string;
+  location_address?: string;
+  location_phone?: string;
+  location_map_title?: string;
+  location_map_desc?: string;
+  location_button_text?: string;
+  location_button_url?: string;
 }

@@ -57,7 +57,37 @@ export const useSiteSettings = () => {
             return [];
           }
         })(),
-        store_hours_summary: data.find(s => s.id === 'store_hours_summary')?.value || ''
+        store_hours_summary: data.find(s => s.id === 'store_hours_summary')?.value || '',
+        events_title: data.find(s => s.id === 'events_title')?.value || 'Host Your <br />\n<span class="text-brand-violet italic">Grand Event.</span>',
+        events_subtitle: data.find(s => s.id === 'events_subtitle')?.value || 'Private Gatherings',
+        events_description: data.find(s => s.id === 'events_description')?.value || 'From intimate celebrations to grand corporate gatherings, Profound + Kitchen provides the perfect backdrop of vibrant Mexican culture and sophisticated elegance.',
+        events_feature1_title: data.find(s => s.id === 'events_feature1_title')?.value || 'Flexible PAX',
+        events_feature1_desc: data.find(s => s.id === 'events_feature1_desc')?.value || 'Customizable seating arrangements for any group size.',
+        events_feature2_title: data.find(s => s.id === 'events_feature2_title')?.value || 'Safe & Private',
+        events_feature2_desc: data.find(s => s.id === 'events_feature2_desc')?.value || 'Dedicated event spaces with strict safety protocols.',
+        events_button_text: data.find(s => s.id === 'events_button_text')?.value || 'Inquire Now',
+        events_button_url: data.find(s => s.id === 'events_button_url')?.value || 'https://forms.gle/B4hsT2YbFSTEAtkH8',
+        events_quote: data.find(s => s.id === 'events_quote')?.value || '"We make every celebration a profound experience."',
+        events_form_title: data.find(s => s.id === 'events_form_title')?.value || 'Official PAX Form',
+        events_form_link_text: data.find(s => s.id === 'events_form_link_text')?.value || 'Access Google Form',
+        location_subtitle: data.find(s => s.id === 'location_subtitle')?.value || 'Find Your Sanctuary',
+        location_title: data.find(s => s.id === 'location_title')?.value || 'Visit Our <br />\n<span class="text-brand-violet italic">Kitchen.</span>',
+        location_address: data.find(s => s.id === 'location_address')?.value || 'Profound + Kitchen<br />26-B Sct Borromeo, South Triangle, Quezon City',
+        location_phone: data.find(s => s.id === 'location_phone')?.value || '09062066175',
+        location_map_title: data.find(s => s.id === 'location_map_title')?.value || 'Interactive Map',
+        location_map_desc: data.find(s => s.id === 'location_map_desc')?.value || "Located in the heart of South Triangle's culinary district.",
+        location_button_text: data.find(s => s.id === 'location_button_text')?.value || 'Get Directions',
+        location_button_url: data.find(s => s.id === 'location_button_url')?.value || 'https://maps.app.goo.gl/9ZQXQXQXQXQXQXQX9',
+        events_policies: (() => {
+          const val = data.find(s => s.id === 'events_policies')?.value;
+          if (!val) return [];
+          try {
+            return JSON.parse(val);
+          } catch (e) {
+            console.error('Error parsing events_policies:', e);
+            return [];
+          }
+        })()
       };
 
       setSiteSettings(settings);
@@ -95,7 +125,7 @@ export const useSiteSettings = () => {
 
       const updatePromises = Object.entries(updates).map(([key, value]) => {
         let finalValue = value;
-        if ((key === 'hero_images' || key === 'shipping_rates' || key === 'store_hours') && (Array.isArray(value) || typeof value === 'object')) {
+        if ((key === 'hero_images' || key === 'shipping_rates' || key === 'store_hours' || key === 'events_policies') && (Array.isArray(value) || typeof value === 'object')) {
           finalValue = JSON.stringify(value);
         }
         return supabase

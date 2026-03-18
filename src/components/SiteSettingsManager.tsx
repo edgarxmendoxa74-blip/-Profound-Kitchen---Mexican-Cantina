@@ -18,7 +18,28 @@ const SiteSettingsManager: React.FC = () => {
     hero_images: [] as string[],
     shipping_rates: {} as any,
     store_hours: [] as StoreHoursEntry[],
-    store_hours_summary: ''
+    store_hours_summary: '',
+    events_title: '',
+    events_subtitle: '',
+    events_description: '',
+    events_policies: [] as { title: string; desc: string }[],
+    events_feature1_title: '',
+    events_feature1_desc: '',
+    events_feature2_title: '',
+    events_feature2_desc: '',
+    events_button_text: '',
+    events_button_url: '',
+    events_quote: '',
+    events_form_title: '',
+    events_form_link_text: '',
+    location_subtitle: '',
+    location_title: '',
+    location_address: '',
+    location_phone: '',
+    location_map_title: '',
+    location_map_desc: '',
+    location_button_text: '',
+    location_button_url: ''
   });
   const [heroFiles, setHeroFiles] = useState<File[]>([]);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -35,9 +56,29 @@ const SiteSettingsManager: React.FC = () => {
         hero_images: siteSettings.hero_images || [],
         shipping_rates: siteSettings.shipping_rates || {},
         store_hours: siteSettings.store_hours || [],
-        store_hours_summary: siteSettings.store_hours_summary || ''
+        store_hours_summary: siteSettings.store_hours_summary || '',
+        events_title: siteSettings.events_title || '',
+        events_subtitle: siteSettings.events_subtitle || '',
+        events_description: siteSettings.events_description || '',
+        events_policies: siteSettings.events_policies || [],
+        events_feature1_title: siteSettings.events_feature1_title || '',
+        events_feature1_desc: siteSettings.events_feature1_desc || '',
+        events_feature2_title: siteSettings.events_feature2_title || '',
+        events_feature2_desc: siteSettings.events_feature2_desc || '',
+        events_button_text: siteSettings.events_button_text || '',
+        events_button_url: siteSettings.events_button_url || '',
+        events_quote: siteSettings.events_quote || '',
+        events_form_title: siteSettings.events_form_title || '',
+        events_form_link_text: siteSettings.events_form_link_text || '',
+        location_subtitle: siteSettings.location_subtitle || '',
+        location_title: siteSettings.location_title || '',
+        location_address: siteSettings.location_address || '',
+        location_phone: siteSettings.location_phone || '',
+        location_map_title: siteSettings.location_map_title || '',
+        location_map_desc: siteSettings.location_map_desc || '',
+        location_button_text: siteSettings.location_button_text || '',
+        location_button_url: siteSettings.location_button_url || ''
       });
-      setLogoPreview(siteSettings.site_logo);
     }
   }, [siteSettings]);
 
@@ -112,7 +153,28 @@ const SiteSettingsManager: React.FC = () => {
         hero_subtitle: formData.hero_subtitle,
         hero_images: finalHeroImages,
         store_hours: formData.store_hours,
-        store_hours_summary: formData.store_hours_summary
+        store_hours_summary: formData.store_hours_summary,
+        events_title: formData.events_title,
+        events_subtitle: formData.events_subtitle,
+        events_description: formData.events_description,
+        events_policies: formData.events_policies,
+        events_feature1_title: formData.events_feature1_title,
+        events_feature1_desc: formData.events_feature1_desc,
+        events_feature2_title: formData.events_feature2_title,
+        events_feature2_desc: formData.events_feature2_desc,
+        events_button_text: formData.events_button_text,
+        events_button_url: formData.events_button_url,
+        events_quote: formData.events_quote,
+        events_form_title: formData.events_form_title,
+        events_form_link_text: formData.events_form_link_text,
+        location_subtitle: formData.location_subtitle,
+        location_title: formData.location_title,
+        location_address: formData.location_address,
+        location_phone: formData.location_phone,
+        location_map_title: formData.location_map_title,
+        location_map_desc: formData.location_map_desc,
+        location_button_text: formData.location_button_text,
+        location_button_url: formData.location_button_url
       });
 
       alert('✅ Site settings saved successfully! The changes will appear after page refresh.');
@@ -143,7 +205,28 @@ const SiteSettingsManager: React.FC = () => {
         hero_images: siteSettings.hero_images || [],
         shipping_rates: siteSettings.shipping_rates || {},
         store_hours: siteSettings.store_hours || [],
-        store_hours_summary: siteSettings.store_hours_summary || ''
+        store_hours_summary: siteSettings.store_hours_summary || '',
+        events_title: siteSettings.events_title || '',
+        events_subtitle: siteSettings.events_subtitle || '',
+        events_description: siteSettings.events_description || '',
+        events_policies: siteSettings.events_policies || [],
+        events_feature1_title: siteSettings.events_feature1_title || '',
+        events_feature1_desc: siteSettings.events_feature1_desc || '',
+        events_feature2_title: siteSettings.events_feature2_title || '',
+        events_feature2_desc: siteSettings.events_feature2_desc || '',
+        events_button_text: siteSettings.events_button_text || '',
+        events_button_url: siteSettings.events_button_url || '',
+        events_quote: siteSettings.events_quote || '',
+        events_form_title: siteSettings.events_form_title || '',
+        events_form_link_text: siteSettings.events_form_link_text || '',
+        location_subtitle: siteSettings.location_subtitle || '',
+        location_title: siteSettings.location_title || '',
+        location_address: siteSettings.location_address || '',
+        location_phone: siteSettings.location_phone || '',
+        location_map_title: siteSettings.location_map_title || '',
+        location_map_desc: siteSettings.location_map_desc || '',
+        location_button_text: siteSettings.location_button_text || '',
+        location_button_url: siteSettings.location_button_url || ''
       });
       setLogoPreview(siteSettings.site_logo);
     }
@@ -376,6 +459,252 @@ const SiteSettingsManager: React.FC = () => {
           {formData.store_hours.length === 0 && !isEditing && (
             <p className="text-sm text-gray-400 italic mt-2">No store hours configured yet.</p>
           )}
+        </div>
+
+        {/* Events Settings */}
+        <div className="mt-10">
+          <label className="block text-[11px] font-black text-brand-black mb-3 uppercase tracking-widest font-montserrat">
+            Events Section Text
+          </label>
+
+          {/* Subtitle */}
+          <div className="mb-4">
+            <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+              Subtitle (e.g. Private Gatherings)
+            </label>
+            {isEditing ? (
+              <input
+                type="text"
+                name="events_subtitle"
+                value={formData.events_subtitle}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-brand-gray/20 text-xs font-black uppercase tracking-[0.2em] font-montserrat"
+              />
+            ) : (
+              <p className="text-sm font-bold text-brand-black">{formData.events_subtitle}</p>
+            )}
+          </div>
+
+          {/* Title */}
+          <div className="mb-4">
+            <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+              Main Title (Supports HTML)
+            </label>
+            {isEditing ? (
+              <textarea
+                name="events_title"
+                value={formData.events_title}
+                onChange={handleInputChange}
+                rows={3}
+                className="w-full px-4 py-3 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-brand-gray/20 text-sm font-mono"
+              />
+            ) : (
+              <div className="text-sm border border-gray-100 p-3 bg-gray-50 rounded-sm overflow-x-auto whitespace-pre-wrap">{formData.events_title}</div>
+            )}
+          </div>
+
+          {/* Description */}
+          <div className="mb-8">
+            <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+              Description Paragraph
+            </label>
+            {isEditing ? (
+              <textarea
+                name="events_description"
+                value={formData.events_description}
+                onChange={handleInputChange}
+                rows={4}
+                className="w-full px-4 py-3 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-brand-gray/20 text-sm"
+              />
+            ) : (
+              <p className="text-sm text-gray-600">{formData.events_description}</p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="space-y-4">
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Feature 1 (e.g. Flexible PAX)</label>
+              {isEditing ? (
+                <>
+                  <input type="text" name="events_feature1_title" value={formData.events_feature1_title} onChange={handleInputChange} placeholder="Title" className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs font-bold" />
+                  <textarea name="events_feature1_desc" value={formData.events_feature1_desc} onChange={handleInputChange} placeholder="Description" rows={2} className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs" />
+                </>
+              ) : (
+                <div><p className="text-xs font-bold mb-1">{formData.events_feature1_title}</p><p className="text-xs text-gray-500">{formData.events_feature1_desc}</p></div>
+              )}
+            </div>
+            <div className="space-y-4">
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Feature 2 (e.g. Safe & Private)</label>
+              {isEditing ? (
+                <>
+                  <input type="text" name="events_feature2_title" value={formData.events_feature2_title} onChange={handleInputChange} placeholder="Title" className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs font-bold" />
+                  <textarea name="events_feature2_desc" value={formData.events_feature2_desc} onChange={handleInputChange} placeholder="Description" rows={2} className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs" />
+                </>
+              ) : (
+                <div><p className="text-xs font-bold mb-1">{formData.events_feature2_title}</p><p className="text-xs text-gray-500">{formData.events_feature2_desc}</p></div>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Button Text</label>
+              {isEditing ? (
+                <input type="text" name="events_button_text" value={formData.events_button_text} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs" />
+              ) : (
+                <p className="text-xs">{formData.events_button_text}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">Button Link (URL)</label>
+              {isEditing ? (
+                <input type="text" name="events_button_url" value={formData.events_button_url} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender text-xs" />
+              ) : (
+                <p className="text-xs break-all">{formData.events_button_url}</p>
+              )}
+            </div>
+          </div>
+
+          <label className="block text-[11px] font-black text-brand-black mb-3 uppercase tracking-widest font-montserrat">
+            Event Policies
+          </label>
+
+          {/* Policies Rows */}
+          <div className="space-y-4">
+            {formData.events_policies.map((policy, index) => (
+              <div key={index} className="flex items-start space-x-3 bg-brand-gray/30 p-4 rounded-sm border border-brand-silver/50">
+                {isEditing ? (
+                  <div className="flex-1 space-y-3">
+                    <input
+                      type="text"
+                      value={policy.title}
+                      onChange={(e) => {
+                        const updated = [...formData.events_policies];
+                        updated[index] = { ...updated[index], title: e.target.value };
+                        setFormData(prev => ({ ...prev, events_policies: updated }));
+                      }}
+                      className="w-full px-3 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-white text-[10px] font-bold uppercase tracking-wider"
+                      placeholder="Title (e.g. Menu Customization)"
+                    />
+                    <textarea
+                      value={policy.desc}
+                      onChange={(e) => {
+                        const updated = [...formData.events_policies];
+                        updated[index] = { ...updated[index], desc: e.target.value };
+                        setFormData(prev => ({ ...prev, events_policies: updated }));
+                      }}
+                      rows={2}
+                      className="w-full px-3 py-2 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-white text-xs"
+                      placeholder="Description"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col w-full">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-brand-black mb-1">{policy.title}</span>
+                    <span className="text-sm text-gray-500">{policy.desc}</span>
+                  </div>
+                )}
+                {isEditing && (
+                  <button
+                    onClick={() => {
+                      const updated = formData.events_policies.filter((_, i) => i !== index);
+                      setFormData(prev => ({ ...prev, events_policies: updated }));
+                    }}
+                    className="p-2 mt-1 text-red-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors self-start"
+                    title="Remove policy"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {isEditing && (
+            <button
+              onClick={() => {
+                setFormData(prev => ({
+                  ...prev,
+                  events_policies: [...prev.events_policies, { title: '', desc: '' }]
+                }));
+              }}
+              className="mt-4 flex items-center space-x-2 px-4 py-2 bg-brand-black text-white rounded-sm hover:bg-brand-lavender hover:text-black transition-all duration-500 font-black text-[10px] uppercase tracking-widest font-montserrat border border-transparent hover:border-brand-lavender/30"
+            >
+              <Plus className="h-3 w-3" />
+              <span>Add Event Policy</span>
+            </button>
+          )}
+
+          {formData.events_policies.length === 0 && !isEditing && (
+            <p className="text-sm text-gray-400 italic mt-2">No event policies configured yet.</p>
+          )}
+
+          <div className="mt-8 border-t border-brand-silver/50 pt-8">
+            <label className="block text-[11px] font-black text-brand-black mb-4 uppercase tracking-widest font-montserrat">
+              Events Footer Elements
+            </label>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Footer Quote</label>
+                {isEditing ? <input type="text" name="events_quote" value={formData.events_quote} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm font-medium italic">{formData.events_quote}</p>}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Form Section Title</label>
+                  {isEditing ? <input type="text" name="events_form_title" value={formData.events_form_title} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm font-bold">{formData.events_form_title}</p>}
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Form Button Text</label>
+                  {isEditing ? <input type="text" name="events_form_link_text" value={formData.events_form_link_text} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm">{formData.events_form_link_text}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Location Section Settings */}
+        <div className="mt-10">
+          <label className="block text-[11px] font-black text-brand-black mb-3 uppercase tracking-widest font-montserrat">
+            Location Section Text
+          </label>
+          <div className="space-y-6">
+            <div>
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Subtitle</label>
+              {isEditing ? <input type="text" name="location_subtitle" value={formData.location_subtitle} onChange={handleInputChange} className="w-full px-4 py-3 border border-brand-silver rounded-sm text-xs font-black uppercase tracking-[0.2em]" /> : <p className="text-sm font-bold">{formData.location_subtitle}</p>}
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Title (Supports HTML)</label>
+              {isEditing ? <textarea name="location_title" value={formData.location_title} onChange={handleInputChange} rows={3} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm font-mono" /> : <div className="text-sm border border-gray-100 p-3 bg-gray-50 rounded-sm overflow-x-auto whitespace-pre-wrap">{formData.location_title}</div>}
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Address (Supports HTML)</label>
+              {isEditing ? <textarea name="location_address" value={formData.location_address} onChange={handleInputChange} rows={3} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm font-mono" /> : <div className="text-sm border border-gray-100 p-3 bg-gray-50 rounded-sm overflow-x-auto whitespace-pre-wrap">{formData.location_address}</div>}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Contact Number (Viber/Mobile)</label>
+                {isEditing ? <input type="text" name="location_phone" value={formData.location_phone} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm">{formData.location_phone}</p>}
+              </div>
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Map Block Title</label>
+              {isEditing ? <input type="text" name="location_map_title" value={formData.location_map_title} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm font-bold" /> : <p className="text-sm font-bold">{formData.location_map_title}</p>}
+            </div>
+            <div>
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Map Block Description</label>
+              {isEditing ? <textarea name="location_map_desc" value={formData.location_map_desc} onChange={handleInputChange} rows={2} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm">{formData.location_map_desc}</p>}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Map Button Text</label>
+                {isEditing ? <input type="text" name="location_button_text" value={formData.location_button_text} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm">{formData.location_button_text}</p>}
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">Map Button URL</label>
+                {isEditing ? <input type="text" name="location_button_url" value={formData.location_button_url} onChange={handleInputChange} className="w-full px-4 py-2 border border-brand-silver rounded-sm text-sm" /> : <p className="text-sm break-all">{formData.location_button_url}</p>}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Site Name */}

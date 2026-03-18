@@ -1,5 +1,6 @@
 import { MapPin, Phone, Clock, ArrowLeft } from 'lucide-react';
 import { useStoreHours } from '../hooks/useStoreHours';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 interface LocationSectionProps {
     onBackClick?: () => void;
@@ -7,6 +8,17 @@ interface LocationSectionProps {
 
 const LocationSection: React.FC<LocationSectionProps> = ({ onBackClick }) => {
     const { storeHours } = useStoreHours();
+    const { siteSettings } = useSiteSettings();
+
+    // Default fallbacks matching original component text
+    const subtitle = siteSettings?.location_subtitle || 'Find Your Sanctuary';
+    const title = siteSettings?.location_title || 'Visit Our <br />\n<span class="text-brand-violet italic">Kitchen.</span>';
+    const address = siteSettings?.location_address || 'Profound + Kitchen<br />26-B Sct Borromeo, South Triangle, Quezon City';
+    const phone = siteSettings?.location_phone || '09062066175';
+    const mapTitle = siteSettings?.location_map_title || 'Interactive Map';
+    const mapDesc = siteSettings?.location_map_desc || "Located in the heart of South Triangle's culinary district.";
+    const btnText = siteSettings?.location_button_text || 'Get Directions';
+    const btnUrl = siteSettings?.location_button_url || 'https://maps.app.goo.gl/9ZQXQXQXQXQXQXQX9';
 
     return (
         <section className="py-24 px-4 bg-white" id="contact">
@@ -25,12 +37,12 @@ const LocationSection: React.FC<LocationSectionProps> = ({ onBackClick }) => {
                     <div className="space-y-12">
                         <div className="space-y-4">
                             <span className="text-brand-violet font-sans font-black uppercase tracking-[0.5em] text-[10px] block">
-                                Find Your Sanctuary
+                                {subtitle}
                             </span>
-                            <h2 className="text-5xl md:text-6xl font-serif font-black text-brand-black leading-tight tracking-tighter">
-                                Visit Our <br />
-                                <span className="text-brand-violet italic">Kitchen.</span>
-                            </h2>
+                            <h2
+                                className="text-5xl md:text-6xl font-serif font-black text-brand-black leading-tight tracking-tighter"
+                                dangerouslySetInnerHTML={{ __html: title }}
+                            />
                         </div>
 
                         <div className="space-y-10">
@@ -40,7 +52,10 @@ const LocationSection: React.FC<LocationSectionProps> = ({ onBackClick }) => {
                                 </div>
                                 <div className="space-y-1">
                                     <h4 className="text-[10px] font-sans font-black text-gray-400 uppercase tracking-widest">Our Address</h4>
-                                    <p className="text-lg font-sans font-bold text-brand-black leading-tight">Profound + Kitchen<br />26-B Sct Borromeo, South Triangle, Quezon City</p>
+                                    <p
+                                        className="text-lg font-sans font-bold text-brand-black leading-tight"
+                                        dangerouslySetInnerHTML={{ __html: address }}
+                                    />
                                 </div>
                             </div>
 
@@ -67,7 +82,7 @@ const LocationSection: React.FC<LocationSectionProps> = ({ onBackClick }) => {
                                 </div>
                                 <div className="space-y-1">
                                     <h4 className="text-[10px] font-sans font-black text-gray-400 uppercase tracking-widest">Viber / Mobile</h4>
-                                    <p className="text-lg font-sans font-bold text-brand-black">09062066175</p>
+                                    <p className="text-lg font-sans font-bold text-brand-black">{phone}</p>
                                 </div>
                             </div>
                         </div>
@@ -79,9 +94,16 @@ const LocationSection: React.FC<LocationSectionProps> = ({ onBackClick }) => {
                             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 group-hover:scale-110 transition-transform mb-6">
                                 <MapPin className="w-10 h-10 text-brand-violet" />
                             </div>
-                            <h3 className="text-xl font-serif font-black text-brand-black mb-2">Interactive Map</h3>
-                            <p className="text-sm text-gray-400 font-sans font-medium">Located in the heart of South Triangle's culinary district.</p>
-                            <button className="mt-8 text-[10px] font-sans font-black uppercase tracking-[0.3em] text-brand-violet hover:tracking-[0.5em] transition-all">Get Directions</button>
+                            <h3 className="text-xl font-serif font-black text-brand-black mb-2">{mapTitle}</h3>
+                            <p className="text-sm text-gray-400 font-sans font-medium">{mapDesc}</p>
+                            <a
+                                href={btnUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-8 text-[10px] font-sans font-black uppercase tracking-[0.3em] text-brand-violet hover:tracking-[0.5em] transition-all"
+                            >
+                                {btnText}
+                            </a>
                         </div>
                     </div>
 
