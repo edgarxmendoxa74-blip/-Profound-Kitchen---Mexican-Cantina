@@ -1,12 +1,12 @@
 const https = require('https');
 
 const options = {
-    hostname: 'fatrarduupwyxphkepqc.supabase.co',
+    hostname: 'kjjgclpvfiiuhufxcwvn.supabase.co',
     path: '/rest/v1/menu_items?select=name,category,base_price',
     method: 'GET',
     headers: {
-        'apikey': 'sb_publishable_33NhPhSQhR9qfFIzuFmzeA_6wWGn9nY',
-        'Authorization': 'Bearer sb_publishable_33NhPhSQhR9qfFIzuFmzeA_6wWGn9nY'
+        'apikey': 'sb_publishable_xkmp8wFIOoLLdyxIwF3eqQ_hifGIRGO',
+        'Authorization': 'Bearer sb_publishable_xkmp8wFIOoLLdyxIwF3eqQ_hifGIRGO'
     }
 };
 
