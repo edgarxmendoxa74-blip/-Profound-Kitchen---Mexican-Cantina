@@ -192,6 +192,7 @@ TRUNCATE TABLE menu_items CASCADE;
 TRUNCATE TABLE categories CASCADE;
 TRUNCATE TABLE coupons CASCADE;
 TRUNCATE TABLE payment_methods CASCADE;
+TRUNCATE TABLE site_settings CASCADE;
 
 -- Categories
 INSERT INTO categories (id, name, icon, sort_order) VALUES
@@ -199,14 +200,25 @@ INSERT INTO categories (id, name, icon, sort_order) VALUES
   ('burritos', 'Hearty Burritos', '🌯', 2),
   ('quesadillas', 'Cheesy Quesadillas', '🧀', 3),
   ('drinks', 'Refreshing Drinks', '🥤', 4),
-  ('sides', 'Side Delights', '🥗', 5);
+  ('sides', 'Side Delights', '🥗', 5)
+ON CONFLICT (id) DO UPDATE SET 
+  name = EXCLUDED.name,
+  icon = EXCLUDED.icon,
+  sort_order = EXCLUDED.sort_order;
 
 -- Menu Items
 INSERT INTO menu_items (id, name, description, base_price, category, popular, image_url) VALUES
   ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Al Pastor Tacos', 'Traditional marinated pork with pineapple, cilantro, and onions on corn tortillas.', 180, 'tacos', true, 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg'),
   ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'Carne Asada Burrito', 'Grilled steak, Mexican rice, black beans, guacamole, and salsa in a large flour tortilla.', 320, 'burritos', true, 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg'),
   ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'Chicken Quesadilla', 'Melted Oaxaca cheese and seasoned grilled chicken in a crispy flour tortilla.', 250, 'quesadillas', false, 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg'),
-  ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14', 'Horchata', 'Traditional sweet rice milk drink with cinnamon and vanilla over ice.', 95, 'drinks', true, 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg');
+  ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14', 'Horchata', 'Traditional sweet rice milk drink with cinnamon and vanilla over ice.', 95, 'drinks', true, 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg')
+ON CONFLICT (id) DO UPDATE SET 
+  name = EXCLUDED.name,
+  description = EXCLUDED.description,
+  base_price = EXCLUDED.base_price,
+  category = EXCLUDED.category,
+  popular = EXCLUDED.popular,
+  image_url = EXCLUDED.image_url;
 
 -- Variations (Portion sizes)
 INSERT INTO variations (menu_item_id, name, price)
@@ -228,14 +240,28 @@ INSERT INTO site_settings (id, value, type, description) VALUES
   ('events_description', 'From intimate celebrations to grand corporate gatherings, Profound + Kitchen provides the perfect backdrop of vibrant Mexican culture.', 'text', 'Description for events.'),
   ('location_address', '26-B Sct Borromeo, South Triangle, Quezon City', 'text', 'Store Address'),
   ('location_phone', '09062066175', 'text', 'Contact Phone'),
-  ('shipping_rates', '{"LUZON": {"3": 190, "5": 320, "10": 620}, "VISAYAS": {"3": 200, "5": 370, "10": 720}}', 'text', 'Shipping rates JSON');
+  ('shipping_rates', '{"LUZON": {"3": 190, "5": 320, "10": 620}, "VISAYAS": {"3": 200, "5": 370, "10": 720}}', 'text', 'Shipping rates JSON')
+ON CONFLICT (id) DO UPDATE SET 
+  value = EXCLUDED.value,
+  type = EXCLUDED.type,
+  description = EXCLUDED.description;
 
 -- Coupons
 INSERT INTO coupons (code, discount_type, discount_value, min_spend) VALUES
   ('WELCOME10', 'percentage', 10, 0),
-  ('FIESTA100', 'fixed', 100, 1000);
+  ('FIESTA100', 'fixed', 100, 1000)
+ON CONFLICT (code) DO UPDATE SET 
+  discount_type = EXCLUDED.discount_type,
+  discount_value = EXCLUDED.discount_value,
+  min_spend = EXCLUDED.min_spend;
 
 -- Payment Methods
 INSERT INTO payment_methods (id, name, account_number, account_name, qr_code_url, sort_order) VALUES
   ('gcash', 'GCash', '0906 206 6175', 'Profound Kitchen', '/images/qr-gcash.png', 1),
-  ('maya', 'Maya', '0906 206 6175', 'Profound Kitchen', '/images/qr-maya.png', 2);
+  ('maya', 'Maya', '0906 206 6175', 'Profound Kitchen', '/images/qr-maya.png', 2)
+ON CONFLICT (id) DO UPDATE SET 
+  name = EXCLUDED.name,
+  account_number = EXCLUDED.account_number,
+  account_name = EXCLUDED.account_name,
+  qr_code_url = EXCLUDED.qr_code_url,
+  sort_order = EXCLUDED.sort_order;
