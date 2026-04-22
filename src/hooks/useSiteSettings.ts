@@ -105,8 +105,7 @@ export const useSiteSettings = () => {
 
       const { error } = await supabase
         .from('site_settings')
-        .update({ value })
-        .eq('id', id);
+        .upsert({ id, value }, { onConflict: 'id' });
 
       if (error) throw error;
 
@@ -130,8 +129,7 @@ export const useSiteSettings = () => {
         }
         return supabase
           .from('site_settings')
-          .update({ value: finalValue })
-          .eq('id', key);
+          .upsert({ id: key, value: finalValue }, { onConflict: 'id' });
       });
 
       const results = await Promise.all(updatePromises);
