@@ -3,6 +3,9 @@ import { Save, Upload, X, Loader, Plus, Trash2 } from 'lucide-react';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { useImageUpload } from '../hooks/useImageUpload';
 import { StoreHoursEntry } from '../types';
+import MultiImageUpload from './MultiImageUpload';
+
+
 
 const SiteSettingsManager: React.FC = () => {
   const { siteSettings, loading, updateSiteSettings } = useSiteSettings();
@@ -359,11 +362,68 @@ const SiteSettingsManager: React.FC = () => {
               )}
               {!isEditing && (
                 <div>
-                  <p className="text-[10px] font-black text-brand-black uppercase tracking-widest">Active Identity</p>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase mt-1">Logo displayed across all channels</p>
                 </div>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Hero Banner Images */}
+        <div className="mt-10">
+          <label className="block text-[11px] font-black text-brand-black mb-3 uppercase tracking-widest font-montserrat">
+            Hero Banner Settings
+          </label>
+          <div className="bg-brand-gray/50 p-6 rounded-sm border border-brand-silver/50">
+            <div className="mb-6">
+              <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+                Hero Subtitle
+              </label>
+              {isEditing ? (
+                <input
+                  type="text"
+                  name="hero_subtitle"
+                  value={formData.hero_subtitle}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-brand-silver rounded-sm focus:ring-1 focus:ring-brand-lavender focus:border-brand-lavender bg-brand-gray/20 text-xs font-black uppercase tracking-[0.2em] font-montserrat"
+                  placeholder="e.g. Authentic Mexican Cuisine"
+                />
+              ) : (
+                <p className="text-sm font-bold text-brand-black">{siteSettings?.hero_subtitle || 'Welcome'}</p>
+              )}
+            </div>
+            
+            {isEditing ? (
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+                  Banner Images
+                </label>
+                <MultiImageUpload
+                  images={formData.hero_images}
+                  onImagesChange={(images) => setFormData(prev => ({ ...prev, hero_images: images }))}
+                  onFilesSelected={(files) => {
+                    const newFiles = [...heroFiles, ...files];
+                    setHeroFiles(newFiles);
+                  }}
+                />
+              </div>
+            ) : (
+              <div>
+                <label className="block text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider">
+                  Banner Images Preview
+                </label>
+                {formData.hero_images.length > 0 ? (
+                  <div className="flex gap-4 overflow-x-auto pb-4">
+                    {formData.hero_images.map((img, i) => (
+                      <div key={i} className="flex-shrink-0 w-32 h-32 rounded-sm overflow-hidden border border-brand-silver">
+                        <img src={img} alt={`Banner ${i + 1}`} className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-400 italic">No banner images configured.</p>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
