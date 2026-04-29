@@ -77,7 +77,9 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                if (!isAddDisabled) onAddToCart(item);
+                if (!isAddDisabled) {
+                  setShowProductDetail(true);
+                }
               }}
               disabled={isAddDisabled}
               className={`flex items-center space-x-1 md:space-x-1.5 px-2.5 py-1.5 md:px-4 md:py-2.5 rounded-full w-full justify-center md:rounded-full text-[8px] md:text-[11px] font-black uppercase tracking-[0.2em] font-heading transition-all duration-300 transform ${!isAddDisabled
@@ -86,7 +88,11 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 }`}
             >
               <Plus className="w-3 h-3 md:w-4 md:h-4 stroke-[3]" />
-              <span>{!isStoreOpen ? 'Closed' : 'Add to Cart'}</span>
+              <span>
+                {!isStoreOpen 
+                  ? 'Closed' 
+                  : 'View Details'}
+              </span>
             </button>
           </div>
         </div>

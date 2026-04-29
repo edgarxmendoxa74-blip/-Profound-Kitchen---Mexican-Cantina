@@ -287,6 +287,19 @@ Please confirm this order to proceed. Experience the flavor of Profound+Kitchen!
                   {/* Delivery Fields */}
                   {orderType === 'delivery' && (
                     <div className="space-y-5 animate-in fade-in slide-in-from-top-4 duration-500">
+                      <div className="bg-violet-50/80 p-5 rounded-xl border border-violet-100 text-[12px] text-black mb-4 shadow-sm">
+                        <p className="font-black uppercase tracking-widest text-[#7F00FF] mb-2 text-[11px]">Delivery Information:</p>
+                        <p className="mb-4 leading-relaxed font-bold opacity-80">
+                          Customers are kindly requested to arrange and cover the cost of their preferred third-party courier service (e.g., Lalamove, GrabExpress) for the delivery of their order. Our staff will have the order prepared and ready for a smooth handoff to the rider.
+                        </p>
+                        <p className="font-black uppercase tracking-widest mb-2 text-[11px] text-[#7F00FF]">Pick up details example:</p>
+                        <ul className="space-y-1 font-bold opacity-80 bg-white p-3 rounded-lg border border-violet-50">
+                          <li><span className="font-black uppercase tracking-wider text-[10px] text-gray-500 w-24 inline-block">Name:</span> Profound Kitchen</li>
+                          <li><span className="font-black uppercase tracking-wider text-[10px] text-gray-500 w-24 inline-block">Mobile:</span> 09209673903</li>
+                          <li><span className="font-black uppercase tracking-wider text-[10px] text-gray-500 w-24 inline-block">Address:</span> Profound+Kitchen 26-B Sct borromeo South Triangle QC</li>
+                          <li><span className="font-black uppercase tracking-wider text-[10px] text-gray-500 w-24 inline-block">Landmarks:</span> Beside Mum's Lasagna</li>
+                        </ul>
+                      </div>
                       <div className="space-y-2">
                         <label className="text-[11px] font-black uppercase tracking-[0.2em] text-black opacity-60">Complete Address</label>
                         <textarea
